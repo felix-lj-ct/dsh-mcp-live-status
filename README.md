@@ -36,6 +36,12 @@ what the Loader says is configured, against what the tool registry says arrived.
 ## Install
 
 ```bash
+dsh plugin --profile web add dsh-mcp-live-status
+```
+
+Or straight from source, if you prefer not to go through npm:
+
+```bash
 dsh plugin --profile web add github:felix-lj-ct/dsh-mcp-live-status
 ```
 

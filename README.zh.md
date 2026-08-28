@@ -33,6 +33,12 @@ mcp-client 只有在 `connect()` 和 `listTools()` 都成功之后，才会把
 ## 安装
 
 ```bash
+dsh plugin --profile web add dsh-mcp-live-status
+```
+
+或者不走 npm，直接从源码装：
+
+```bash
 dsh plugin --profile web add github:felix-lj-ct/dsh-mcp-live-status
 ```
 
