@@ -1,5 +1,12 @@
 node_modules/
-dist/
 *.tgz
 *.log
 .DS_Store
+
+# NOTE: dist/ is deliberately NOT ignored — it is committed.
+#
+# This plugin installs via `dsh plugin add github:…`, and pnpm blocks a git
+# dependency's `prepare` script by default: it fails the install and tells the
+# user to add an `allowBuilds` key that is pinned to the commit hash, so the
+# key would change on every release. Shipping the built host half removes that
+# step entirely. Run `npm run build` before committing a change to src/.

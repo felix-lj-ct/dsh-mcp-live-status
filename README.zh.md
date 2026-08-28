@@ -146,6 +146,10 @@ dsh plugin --profile web add ./dsh-mcp-live-status
 dsh --profile web --dump-config | grep -A2 dsh-mcp-live-status
 ```
 
+`dist/` 是刻意提交进仓库的。pnpm 默认拦截 git 依赖的 `prepare` 脚本，
+而它要求的 `allowBuilds` key 绑定 commit hash——如果靠安装时构建，
+每个用户在每次发版后都得重新粘一次那个 key。改 `src/` 后请先跑 `npm run build` 再提交。
+
 两半彼此独立：
 
 - `src/index.ts` → `dist/index.js` —— Node 侧，采集状态并提供路由。

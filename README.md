@@ -154,6 +154,11 @@ dsh plugin --profile web add ./dsh-mcp-live-status
 dsh --profile web --dump-config | grep -A2 dsh-mcp-live-status
 ```
 
+`dist/` is committed on purpose. pnpm blocks a git dependency's `prepare`
+script by default, and the `allowBuilds` key it asks for is pinned to the commit
+hash — so building on install would make every user paste a new key on every
+release. Run `npm run build` before committing a change to `src/`.
+
 The two halves are independent:
 
 - `src/index.ts` → `dist/index.js` — Node side; collects status, serves the route.
