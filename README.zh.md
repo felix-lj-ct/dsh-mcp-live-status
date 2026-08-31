@@ -2,6 +2,10 @@
 
 [English](README.md) | 中文
 
+[![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/felix-lj-ct/dsh-mcp-live-status)
+[![npm](https://img.shields.io/npm/v/dsh-mcp-live-status)](https://www.npmjs.com/package/dsh-mcp-live-status)
+[![license](https://img.shields.io/npm/l/dsh-mcp-live-status)](LICENSE)
+
 **在输入框里看清哪些 MCP 真的连上了——在你按下发送键之前。**
 
 一个 DeepSeek Harness 插件，把 MCP 实时状态药丸放进对话输入框的工具行，
@@ -42,13 +46,35 @@ dsh plugin --profile web add dsh-mcp-live-status
 dsh plugin --profile web add github:felix-lj-ct/dsh-mcp-live-status
 ```
 
-然后重启 profile：
+然后重启 profile——正在运行的实例跑的还是旧的内存镜像：
 
 ```bash
 dsh --profile web
 ```
 
-药丸会出现在输入框工具行。没有配置任何 MCP 时它整个不渲染，不占布局。
+配置到此结束。没有需要配的东西，也没有要执行的命令：打开一个会话，
+药丸就在输入框工具行里，紧挨着权限模式控件的右边。
+
+**两个前置条件**，都容易漏：
+
+1. **必须是 `web` profile。** 这个插件是浏览器 UI，在 `headless` 或 `tui` 下不做任何事。
+2. **至少配了一个 MCP 服务器。** 一个都没有时药丸整个不渲染——这是刻意设计，
+   空配置不该占布局。这也是「装完什么都没看到」最常见的原因。
+
+### 没看到药丸？
+
+先查 host 半边，它的应答独立于浏览器：
+
+```bash
+curl 127.0.0.1:3080/dsh-mcp-live-status/status
+```
+
+- **连接被拒 / 404** —— host 半边没加载。确认 patch 行是否生效：
+  `dsh --profile web --dump-config | grep -A2 dsh-mcp-live-status`
+- **`"configured": 0`** —— 没有配置 MCP 服务器，或者全被停用了。
+  设 `showDisabled: true` 可以看到被停用的那些。
+- **返回了正常 JSON 且有服务器，但没有药丸** —— 你所在的界面没有会话，
+  打开或新建一个对话即可。
 
 ## 长什么样
 

@@ -2,6 +2,10 @@
 
 English | [中文](README.zh.md)
 
+[![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/felix-lj-ct/dsh-mcp-live-status)
+[![npm](https://img.shields.io/npm/v/dsh-mcp-live-status)](https://www.npmjs.com/package/dsh-mcp-live-status)
+[![license](https://img.shields.io/npm/l/dsh-mcp-live-status)](LICENSE)
+
 **See which MCP servers are actually connected — in the composer, before you hit send.**
 
 A DeepSeek Harness plugin that puts a live MCP status pill in the conversation
@@ -45,14 +49,38 @@ Or straight from source, if you prefer not to go through npm:
 dsh plugin --profile web add github:felix-lj-ct/dsh-mcp-live-status
 ```
 
-Then restart the profile:
+Then restart the profile — a running instance keeps the old code in memory:
 
 ```bash
 dsh --profile web
 ```
 
-The pill appears in the composer tool row. If no MCP servers are configured, it
-renders nothing at all and costs no layout.
+That is the whole setup. There is nothing to configure and no command to run:
+open a session and the pill is in the composer tool row, just right of the
+access-mode control.
+
+**Two prerequisites**, both easy to miss:
+
+1. **The `web` profile.** The plugin is browser UI; it does nothing in
+   `headless` or `tui`.
+2. **At least one configured MCP server.** With none, the pill renders nothing
+   at all — by design, so an empty setup costs no layout. That is also the most
+   common reason for "I installed it and see nothing".
+
+### Not seeing the pill?
+
+Check the host half first — it answers independently of the browser:
+
+```bash
+curl 127.0.0.1:3080/dsh-mcp-live-status/status
+```
+
+- **Connection refused / 404** — the host half is not loaded. Confirm the patch
+  row landed: `dsh --profile web --dump-config | grep -A2 dsh-mcp-live-status`
+- **`"configured": 0`** — no MCP servers are configured, or they are all
+  disabled. Set `showDisabled: true` to see the disabled ones.
+- **Valid JSON with servers, but no pill** — you are on a screen with no
+  session. Open or start a conversation.
 
 ## What it looks like
 

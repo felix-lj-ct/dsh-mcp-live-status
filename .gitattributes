@@ -1,0 +1,7 @@
+# dist/ is committed (see .gitignore for why) but it is tsc output, not source.
+# Without this, GitHub Linguist counts the bundled JS and reports the repo as
+# JavaScript — which is one of the signals a Hub reviewer looks at.
+dist/** linguist-generated=true
+
+# The browser half IS hand-written source, so it must stay counted.
+lib/client.js linguist-generated=false
