@@ -13,6 +13,13 @@ composer's tool row, next to the access-mode and model controls.
 
 ![The MCP status pill in the composer tool row](docs/screenshot.png)
 
+## Features
+
+- MCP connection status at a glance, inside the composer
+- Catches the false-healthy case: mounted but never connected
+- Click through for per-server transport, tool count, and failure reason
+- Read-only and zero-config; command-line credentials are redacted
+
 ## Why
 
 DSH's settings page can tell you an MCP plugin *mounted*. It cannot tell you the
